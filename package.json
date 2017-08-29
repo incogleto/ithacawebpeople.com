@@ -12,6 +12,9 @@
     "postinstall": "npm run build && knex migrate:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "8.1.4"
+  },
   "keywords": [
     "Ithaca",
     "Web",
