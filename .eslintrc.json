@@ -1,0 +1,62 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "commonjs": true,
+    "es6": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "rules": {},
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "globals": {
+    "console": true,
+    "clearTimeout": true,
+    "process": true,
+    "arguments": true,
+    "setTimeout": true,
+    "setInterval": true,
+    "Buffer": true
+   },
+  "rules": {
+    "no-console": 1,
+    "strict": 0,
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "indent": [
+      "error",
+      4
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "no-case-declarations": "off",
+    "no-class-assign": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none"
+      }
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+          "allowTemplateLiterals": true
+      }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ]
+  }
+}

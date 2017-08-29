@@ -1,0 +1,6 @@
+.env
+dist
+coverage
+.nyc_output
+node_modules/*
+!node_modules/app
