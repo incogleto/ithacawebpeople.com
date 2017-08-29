@@ -13,3 +13,4 @@ if ( NODE_ENV == 'development' ){
 
 // kick off server
 require(`./${ source }/server`)
+require(`./${ source }/server/worker`)

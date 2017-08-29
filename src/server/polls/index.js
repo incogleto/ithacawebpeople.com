@@ -61,7 +61,7 @@ export const createPoll = ({ interval, processor, cron = null }) => {
 
 
 // controller function to start all polls
-export default async () => {
+export const start = async () => {
 
     const polls = await getPolls()
     return polls.map(poll => {

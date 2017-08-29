@@ -3,7 +3,7 @@ require('app/environment')
 const defaults = {
     migrations: {
         tableName: 'schema_migrations',
-        directory: './src/server/db/migrations'
+        directory: './node_modules/app/db/migrations'
     },
     client: 'postgresql',
     connection: process.env.DATABASE_URL,

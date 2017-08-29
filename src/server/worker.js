@@ -1,1 +1,2 @@
-require('./polls')
+const polls = require('./polls')
+polls.start()
