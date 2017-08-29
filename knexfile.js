@@ -1,4 +1,4 @@
-require('app/environment')
+require('./environment')
 
 const defaults = {
     migrations: {

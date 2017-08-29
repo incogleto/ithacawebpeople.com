@@ -1,4 +1,4 @@
-require('app/environment')
+require('./environment')
 const { NODE_ENV } = process.env
 
 // require from dist by default

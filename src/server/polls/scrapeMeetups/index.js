@@ -1,7 +1,7 @@
 import extractEvtData from './extractEvent'
 import rp from 'request-promise'
 import cheerio from 'cheerio'
-import knex from 'app/db'
+import knex from 'shared/db'
 
 const meetupURL = 'https://www.meetup.com/ithaca-web-people'
 
