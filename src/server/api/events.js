@@ -1,5 +1,5 @@
-import { succeed } from 'shared/responses'
-import knex from 'shared/db'
+import { succeed } from '../utils/responses'
+import knex from '../db'
 import _ from 'lodash'
 
 const handler = async (req, res, next) => {
