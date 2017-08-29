@@ -21,7 +21,8 @@
     "arguments": true,
     "setTimeout": true,
     "setInterval": true,
-    "Buffer": true
+    "Buffer": true,
+    "__dirname": true
    },
   "rules": {
     "no-console": 1,
