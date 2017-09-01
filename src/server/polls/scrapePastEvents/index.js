@@ -1,41 +1,27 @@
+import { getPastEvents, getFutureEvents } from './gatherEvents'
 import extractEvtData from './extractEvent'
 import rp from 'request-promise'
 import cheerio from 'cheerio'
 import knex from '../../db'
+import _ from 'lodash'
 
-const base = 'https://www.meetup.com'
+// const base = 'https://www.meetup.com'
 
 const processor = async () => {
 
+    // get all meetup groups
     const groups = await knex('groups')
     let total = 0
 
+    // loop groups
     for (var j in groups) {
 
         const group = groups[j]
-        const events = []
 
-        // scrape through pagination
-        let reachedEnd = false, page = 1
-        while ( !reachedEnd ){
-
-            // scrape page
-            const $ = await rp({
-                uri: `${ base }/${ group.foreign_id }/events/past/?page=${ page }`,
-                transform: function (body) {
-                    return cheerio.load(body)
-                }
-            })
-
-            // get event URLs
-            const $evts = $('#events-list-module .event-item')
-            $evts.each(function(){
-                events.push($(this).find('a.event-title').attr('href'))
-            })
-
-            page++
-            if ( !$evts.length ) reachedEnd = true
-        }
+        // scrape all events past & future, merge
+        const pastEvents = await getPastEvents(group)
+        const futureEvents = await getFutureEvents(group)
+        const events = _.concat(pastEvents, futureEvents)
 
         // scrape each event, add to db
         for (var i in events) {
