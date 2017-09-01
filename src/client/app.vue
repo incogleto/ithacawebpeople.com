@@ -37,12 +37,9 @@
         color: #ffffff;
     }
     .wrapper main {
-        padding: 90px 60px 60px;
+        padding: 90px 0 60px;
     }
     main h3 {
-        /*text-transform: uppercase;*/
-        /*letter-spacing: 2px;*/
-        /*font-weight: 300;*/
         font-size: 20px;
     }
 </style>

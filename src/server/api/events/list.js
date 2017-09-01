@@ -10,8 +10,16 @@ const handler = async (req, res, next) => {
         limit = req.query.limit ? Math.min(req.query.limit, 100) : 25,
         offset = req.query.offset || 0
 
+    // modifier to filter by dates
+    const limitDates = q => {
+        const after = req.query.after && new Date(parseInt(req.query.after))
+        const before = req.query.before && new Date(parseInt(req.query.before))
+        if ( after ) q.where('date', '>', after)
+        if ( before ) q.where('date', '<', before)
+    }
+
     // function to get events
-    const getEvents = () => knex('events')
+    const getEvents = () => knex('events').modify(limitDates)
 
     // query and count total
     const [data, count] = await Promise.all([
