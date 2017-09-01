@@ -68,7 +68,7 @@ const processor = async () => {
     return total
 }
 
-// every 2 hours
+// every 2 hours on the hour
 export default {
     cron: '0 */2 * * *',
     // interval: 20 * 60 * 1000,

@@ -4,9 +4,12 @@ import knex from '~/src/server/db'
 
 const handler = async (req, res, next) => {
 
-    const event = await knex('events').where({ id: req.params.event_id }).first()
+    const note = await knex('notes').where({
+        id: req.params.note_id,
+        event_id: req.params.event_id
+    }).first()
 
-    return succeed({ res, msg: 'Successfully retrieved event.', add: { data: event } })
+    return succeed({ res, msg: 'Successfully retrieved note.', add: { data: note } })
 }
 
 export default wrapRoute(handler)

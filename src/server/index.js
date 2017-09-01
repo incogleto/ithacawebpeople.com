@@ -1,10 +1,14 @@
 /* eslint no-console: 0 */
+import bodyParser from 'body-parser'
 import express from 'express'
 import api from './api'
 import path from 'path'
 
 const app = express()
 app.use(express.static(path.resolve(__dirname, '../../dist/public')))
+
+// parse json
+app.use(bodyParser.json())
 
 // route api
 app.use('/api', api)

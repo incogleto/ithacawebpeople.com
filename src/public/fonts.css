@@ -1,0 +1,19 @@
+@font-face {
+   font-family: 'Brown';
+   src: url('lineto-brown-regular.eot');
+   src: url('lineto-brown-regular.eot?#iefix') format('embedded-opentype'),
+         url('lineto-brown-regular.woff2') format('woff2'),
+         url('lineto-brown-regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+   font-family: 'Brown';
+   src: url('lineto-brown-light.eot');
+   src: url('lineto-brown-light.eot?#iefix') format('embedded-opentype'),
+         url('lineto-brown-light.woff2') format('woff2'),
+         url('lineto-brown-light.woff') format('woff');
+    font-style: normal;
+    font-weight: 300;
+}

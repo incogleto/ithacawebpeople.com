@@ -31,7 +31,8 @@ const processor = async () => {
     return groups.length
 }
 
+// 1:15am daily
 export default {
     processor,
-    interval: 20 * 60 * 1000
+    cron: '15 1 * * *'
 }

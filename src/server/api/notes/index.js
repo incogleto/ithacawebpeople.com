@@ -1,12 +1,12 @@
-import notesRoute from '../notes'
 import { Router } from 'express'
+import create from './create'
 import show from './show'
 import list from './list'
 
 const router = new Router({ mergeParams: true })
 
-router.use('/:event_id/notes', notesRoute)
-router.get('/:event_id', show)
+router.get('/:note_id', show)
+router.post('/', create)
 router.get('/', list)
 
 export default router

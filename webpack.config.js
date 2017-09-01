@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const resolve = file => path.resolve( __dirname, file )
 const webpack = require('webpack')
 const path = require('path')
 
@@ -14,17 +15,19 @@ const prodPlugins = [
 ]
 
 module.exports = {
-    entry: {
-        app: './src/client/index.js'
-    },
+    entry: ['whatwg-fetch', './src/client/index.js'],
     output: {
-        path: path.resolve(__dirname, './dist/public'),
+        path: resolve('./dist/public'),
         publicPath: '/public/',
         filename: 'build.js'
     },
     resolve: {
+        modules: [
+            resolve( './' ),
+            'node_modules'
+        ],
         alias: {
-            'public': path.resolve(__dirname, './dist/public')
+            'public': resolve('./dist/public')
         }
     },
     module: {
