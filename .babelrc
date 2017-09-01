@@ -4,6 +4,7 @@
     "latest"
   ],
   "plugins": [
-    "transform-runtime"
+    "transform-runtime",
+    "babel-plugin-root-import"
   ]
 }

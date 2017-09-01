@@ -1,5 +1,6 @@
-import { succeed } from '../utils/responses'
-import knex from '../db'
+import { succeed } from '~/src/server/utils/responses'
+import wrapRoute from '~/src/server/utils/wrapRoute'
+import knex from '~/src/server/db'
 import _ from 'lodash'
 
 const handler = async (req, res, next) => {
@@ -9,12 +10,16 @@ const handler = async (req, res, next) => {
         limit = req.query.limit ? Math.min(req.query.limit, 100) : 25,
         offset = req.query.offset || 0
 
+    // function to get events
     const getEvents = () => knex('events')
 
+    // query and count total
     const [data, count] = await Promise.all([
         getEvents().offset(offset).orderBy(orderBy, order).limit(limit),
         getEvents().count().then(_.first)
     ])
+
+    // build pagination
     const pagination = {
         total: parseInt(count.count) || 0,
         limit,
@@ -24,4 +29,4 @@ const handler = async (req, res, next) => {
     return succeed({ res, msg: 'Successfully retrieved events.', add: { pagination, data } })
 }
 
-export default handler
+export default wrapRoute(handler)
