@@ -6,6 +6,8 @@ exports.up = function(knex, Promise) {
         t.string('email')
         t.string('title')
         t.text('body')
+        t.string('token')
+        t.timestamp('verified')
         t.timestamps(true, true)
     })
 }

@@ -1,3 +1,4 @@
+import serializer from '~/src/server/serializers/note'
 import { succeed } from '~/src/server/utils/responses'
 import wrapRoute from '~/src/server/utils/wrapRoute'
 import knex from '~/src/server/db'
@@ -13,7 +14,7 @@ const handler = async (req, res, next) => {
     // function to get notes
     const getNotes = () => knex('notes').where({
         event_id: req.params.event_id
-    })
+    }).whereNotNull('verified')
 
     // query and count total
     const [data, count] = await Promise.all([
@@ -28,7 +29,7 @@ const handler = async (req, res, next) => {
         offset
     }
 
-    return succeed({ res, msg: 'Successfully retrieved notes.', add: { pagination, data } })
+    return succeed({ res, msg: 'Successfully retrieved notes.', add: { pagination, data: _.map(data, serializer) } })
 }
 
 export default wrapRoute(handler)
