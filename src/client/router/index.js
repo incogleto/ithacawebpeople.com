@@ -11,6 +11,8 @@ const routeTable = [
         path: '/events/:event_id',
         component: sidebarCMP,
         beforeEnter (to, from, next) {
+            // preload event data with associated notes
+            store.dispatch('GET_EVENT_NOTES', to.params.event_id)
             store.dispatch('GET_EVENT', to.params.event_id)
             return next()
         }

@@ -1,4 +1,4 @@
-import { getEvent } from '../utils'
+import { getEvent, getNotes } from '../utils'
 import Vuex from 'vuex'
 // import _ from 'lodash'
 import Vue from 'vue'
@@ -10,7 +10,8 @@ Vue.use( Vuex )
 export default new Vuex.Store({
     state: {
         screenOn: false,
-        events: {}
+        events: {},
+        notes: {}
     },
     mutations: {
         'INITIALIZE_SCREEN': (state) => {
@@ -22,7 +23,17 @@ export default new Vuex.Store({
             return state
         },
         'SET_EVENT': (state, evt) => {
-            state.events[evt.foreign_id] = evt
+            state.events = {
+                ...state.events,
+                [evt.foreign_id]: evt
+            }
+            return state
+        },
+        'SET_EVENT_NOTES': (state, { event_id, notes }) => {
+            state.notes = {
+                ...state.notes,
+                [event_id]: notes
+            }
             return state
         }
     },
@@ -32,6 +43,12 @@ export default new Vuex.Store({
             const evt = await getEvent(id)
             context.commit('SET_EVENT', evt)
             return evt
+        },
+        'GET_EVENT_NOTES': async (context, event_id) => {
+            // load event notes from server
+            const notes = await getNotes(event_id)
+            context.commit('SET_EVENT_NOTES', { event_id, notes })
+            return notes
         }
     }
 })

@@ -33,3 +33,12 @@ export const getEvent = async id => {
     // all good, return data
     return json.data
 }
+
+// get notes for single event
+export const getNotes = async event_id => {
+    const json = await fetch(`/api/events/${ event_id }/notes`).then(r => r.json())
+    if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
+
+    // all good, return data
+    return json.data
+}
