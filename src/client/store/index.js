@@ -1,6 +1,6 @@
 import { getEvent, getNotes } from '../utils'
 import Vuex from 'vuex'
-// import _ from 'lodash'
+import _ from 'lodash'
 import Vue from 'vue'
 import 'whatwg-fetch'
 
@@ -11,7 +11,8 @@ export default new Vuex.Store({
     state: {
         screenOn: false,
         events: {},
-        notes: {}
+        notes: {},
+        editing: {}
     },
     mutations: {
         'INITIALIZE_SCREEN': (state) => {
@@ -33,6 +34,26 @@ export default new Vuex.Store({
             state.notes = {
                 ...state.notes,
                 [event_id]: notes
+            }
+            return state
+        },
+        'INITIALIZE_EVENT_EDIT': (state, event_id) => {
+            state.editing = {
+                ...state.editing,
+                [event_id]: {
+                    email: '',
+                    body: _.get(state, `notes[${ event_id }][0].body`) || ''
+                }
+            }
+            return state
+        },
+        'EDIT_EVENT_BODY': (state, { event_id, body }) => {
+            state.editing = {
+                ...state.editing,
+                [event_id]: {
+                    ...state.editing[event_id],
+                    body
+                }
             }
             return state
         }

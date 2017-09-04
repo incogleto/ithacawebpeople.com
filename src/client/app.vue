@@ -38,9 +38,11 @@
 </script>
 
 <style>
+    body, input, button, textarea {
+        font-family: 'Brown';
+    }
     body {
         background-color: #444444;
-        font-family: 'Brown';
         line-height: 2em;
         font-weight: 300;
         color: #ffffff;
@@ -56,6 +58,9 @@
     }
     ul {
         list-style-type: none;
+    }
+    *:focus {
+        outline: none;
     }
     .wrapper main {
         padding: 90px 0 60px;

@@ -7,7 +7,10 @@
         <div class="description">{{ event.description }}</div>
 
         <div v-if="firstNote.email" class="note-module">
-            <h4>Additional info:</h4>
+            <div class="meta">
+                <h4>Additional info:</h4>
+                <button class="edit" @click="$store.commit('INITIALIZE_EVENT_EDIT', event_id)">Edit</button>
+            </div>
             <div class="divider-sm"></div>
             <div class="meta">
                 <div class="email">Last Updated By: {{ firstNote.email }}</div>
@@ -37,7 +40,10 @@
                 return _.first(this.notes) || {}
             },
             noteMarkdown () {
-                return marked(this.firstNote.body || '')
+                return this.editing ? marked(this.editing.body) : marked(this.firstNote.body || '')
+            },
+            editing () {
+                return this.$store.state.editing[ this.event_id ]
             },
             formattedDate () {
                 return moment(this.event.date).format('MMMM Do, YYYY')
