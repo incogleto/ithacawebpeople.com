@@ -2,15 +2,26 @@
     <div class="wrapper">
         <header-module></header-module>
         <home></home>
-        <router-view></router-view>
+
+        <transition name="fade">
+            <div
+                v-if="screenOn"
+                class="screen"
+                @click="$router.push('/')">
+            </div>
+        </transition>
+
+        <trans-slide-left :speed="400">
+            <router-view></router-view>
+        </trans-slide-left>
     </div>
 </template>
 
 <script>
     import headerModule from './components/header-module.vue'
-    import home from 'src/client/components/home.vue'
+    import home from './components/home.vue'
     import router from './router'
-    // import store from 'src/store'
+    import store from './store'
 
     export default {
         el: '#app',
@@ -18,7 +29,11 @@
             'header-module': headerModule,
             'home': home
         },
-        router: router
+        router: router,
+        store: store,
+        computed: {
+            screenOn () { return this.$store.state.screenOn }
+        }
     }
 </script>
 
@@ -47,5 +62,22 @@
     }
     main h3 {
         font-size: 28px;
+    }
+
+    .screen {
+        background-color: rgba(0, 0, 0, 0.6);
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        top: 0;
+    }
+
+    /* transitions */
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .3s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
     }
 </style>

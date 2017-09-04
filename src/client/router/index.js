@@ -1,4 +1,4 @@
-import eventSideBar from 'src/client/components/event-sidebar.vue'
+import sidebarCMP from 'src/client/components/sidebar.vue'
 import VueRouter from 'vue-router'
 import Vue from 'vue'
 
@@ -6,7 +6,7 @@ Vue.use( VueRouter )
 
 // build routing table
 const routeTable = [
-    { path: '/events/:event_id', component: eventSideBar }
+    { path: '/events/:event_id', component: sidebarCMP }
 ]
 
 
