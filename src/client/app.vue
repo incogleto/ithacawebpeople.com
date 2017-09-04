@@ -1,19 +1,22 @@
 <template>
     <div class="wrapper">
         <header-module></header-module>
+        <home></home>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
     import headerModule from './components/header-module.vue'
+    import home from 'src/client/components/home.vue'
     import router from './router'
     // import store from 'src/store'
 
     export default {
         el: '#app',
         components: {
-            'header-module': headerModule
+            'header-module': headerModule,
+            'home': home
         },
         router: router
     }
@@ -21,7 +24,7 @@
 
 <style>
     body {
-        background-color: #39393b;
+        background-color: #444444;
         font-family: 'Brown';
         line-height: 2em;
         font-weight: 300;
@@ -36,10 +39,13 @@
     a {
         color: #ffffff;
     }
+    ul {
+        list-style-type: none;
+    }
     .wrapper main {
         padding: 90px 0 60px;
     }
     main h3 {
-        font-size: 20px;
+        font-size: 28px;
     }
 </style>

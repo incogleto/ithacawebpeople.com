@@ -5,35 +5,58 @@
             <div class="column" v-html="group.description"></div>
         </div>
         <div class="row">
+            <div class="column">
+                <past-meetups></past-meetups>
+            </div>
             <div class="column next-meetup">
                 <h3>Next Meetup</h3>
                 <div class="divider-sm"></div>
-                <meetup-list :limit="1" :after="new Date().getTime()"></meetup-list>
-            </div>
-            <div class="column past-meetups">
-                <h3>Past Meetups</h3>
-                <div class="divider-sm"></div>
-                <meetup-list :before="new Date().getTime()"></meetup-list>
+                <div class="next-meetup-module">
+
+                </div>
             </div>
         </div>
     </main>
 </template>
 
 <script>
+    import pastMeetupsCMP from './past-meetups.vue'
+    import { getEvents } from '../utils'
     import _ from 'lodash'
     import 'whatwg-fetch'
 
     export default {
         name: 'home',
-        data () {
-            return { group: {} }
+        components: {
+            'past-meetups': pastMeetupsCMP
         },
-        async created () {
-            const json = await fetch('/api/groups').then(r => r.json())
-            this.group = _.first(json.data)
+        data () {
+            return {
+                group: {},
+                nextEvent: {}
+            }
+        },
+        created () {
+            return Promise.all([
+                this.setGroup(),
+                this.setNextEvent()
+            ]).catch(err => console.log('Error in home module:', err))
         },
         computed: {
             loading () { return _.isEmpty(this.group) }
+        },
+        methods: {
+            async setGroup () {
+                const json = await fetch('/api/groups').then(r => r.json())
+                this.group = _.first(json.data)
+            },
+            async setNextEvent () {
+                const evts = await getEvents({
+                    after: new Date().getTime(),
+                    limit: 1
+                })
+                this.nextEvent = _.first(evts)
+            }
         }
     }
 </script>
@@ -43,7 +66,9 @@
         font-size: 20px;
     }
     .home .hero {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: #39393b;
+        line-height: 2em;
     }
     .home .row {
         padding: 0 60px;
@@ -56,7 +81,7 @@
     }
     .home .column:nth-child(odd) {
         box-sizing: border-box;
-        padding-right: 50px;
+        padding-right: 100px;
     }
     .home .past-meetups .description,
     .home .past-meetups .button {

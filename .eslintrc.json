@@ -22,7 +22,8 @@
     "setTimeout": true,
     "setInterval": true,
     "Buffer": true,
-    "__dirname": true
+    "__dirname": true,
+    "fetch": true
    },
   "rules": {
     "no-console": 1,
