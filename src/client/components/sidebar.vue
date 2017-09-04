@@ -5,8 +5,10 @@
 </template>
 
 <script>
+    import _ from 'lodash'
+
     export default {
-        name: 'event-sidebar',
+        name: 'sidebar',
         data () {
             return { mounted: false }
         },
@@ -24,6 +26,12 @@
                 setTimeout(() => {
                     this.$router.push('/')
                 }, 300)
+            }
+        },
+        computed: {
+            event () {
+                const eventID = _.get(this.$route, 'params.event_id')
+                return _.get(this.$store, `state.events[${ eventID }]`) || {}
             }
         }
     }

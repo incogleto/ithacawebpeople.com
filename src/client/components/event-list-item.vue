@@ -17,7 +17,7 @@
         computed: {
             formattedDate () {
                 if (!this.event) return ''
-                return moment(this.event.date).format('MM / YY')
+                return moment(this.event.date).format('MMM — YYYY')
             }
         }
     }

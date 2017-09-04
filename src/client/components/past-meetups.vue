@@ -49,4 +49,15 @@
         white-space: nowrap;
         overflow: hidden;
     }
+
+    .past-meetups-module ul li {
+        transition: all 0.2s;
+    }
+    .past-meetups-module ul:hover li {
+        opacity: 0.5;
+    }
+    .past-meetups-module ul li:hover {
+        padding-left: 5px;
+        opacity: 1;
+    }
 </style>

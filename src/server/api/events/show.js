@@ -4,7 +4,7 @@ import knex from '~/src/server/db'
 
 const handler = async (req, res, next) => {
 
-    const event = await knex('events').where({ id: req.params.event_id }).first()
+    const event = await knex('events').where({ foreign_id: req.params.event_id }).first()
 
     return succeed({ res, msg: 'Successfully retrieved event.', add: { data: event } })
 }
