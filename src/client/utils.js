@@ -2,13 +2,7 @@ import _ from 'lodash'
 
 // query events
 export const getEvents = async params => {
-
-    params = _.pick(params, ['limit', 'before'])
-
-    if ( params.after ){
-        params.order = 'ASC'
-        params.after = params.after
-    }
+    params = _.pick(params, ['limit', 'before', 'after', 'order', 'orderBy'])
 
     // build query string from params
     const qs = _.keys(params).filter(key => {

@@ -2,7 +2,6 @@ import { getEvent, getNotes } from '../utils'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import Vue from 'vue'
-import 'whatwg-fetch'
 
 // add vuex
 Vue.use( Vuex )

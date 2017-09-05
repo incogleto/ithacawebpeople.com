@@ -1,15 +1,11 @@
 <template>
-    <div class="past-meetups-module">
-        <h3>Past Meetups</h3>
-        <div class="divider divider-sm"></div>
-        <ul class="events">
-            <event-list-item
-                v-for="(evt, i) in events"
-                :event="evt"
-                :key="`event-item-${ i }`">
-            </event-list-item>
-        </ul>
-    </div>
+    <ul class="past-meetups-module event-list">
+        <event-list-item
+            v-for="(evt, i) in events"
+            :event="evt"
+            :key="`event-item-${ i }`">
+        </event-list-item>
+    </ul>
 </template>
 
 <script>
@@ -31,18 +27,34 @@
 </script>
 
 <style>
-    .past-meetups-module ul {
+    .past-meetups-module {
         line-height: 1em;
         padding: 0;
     }
-    .past-meetups-module ul li {
+    .past-meetups-module li {
         transition: all 0.2s;
     }
-    .past-meetups-module ul:hover li {
+
+    .event-list li a {
+        position: relative;
+    }
+    .event-list li a::before {
+        transform: translateX(-100%);
+        transition: opacity 0.2s;
+        opacity: 0;
+        content: '→';
+        position: absolute;
+        top: 0.75em;
+        left: -5px;
+    }
+    .event-list:hover li {
         opacity: 0.5;
     }
-    .past-meetups-module ul li:hover {
-        padding-left: 5px;
+    .event-list li:hover a::before {
+        opacity: 1;
+    }
+    .event-list li:hover {
+        padding-left: 15px;
         opacity: 1;
     }
 </style>

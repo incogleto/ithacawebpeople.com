@@ -5,7 +5,7 @@
                 <input name="email" placeholder="Email Address" type="email">
             </div>
             <div v-else-if="step == 'body'" class="markdown-input">
-                <textarea name="markdown" placeholder="" @input="changeBody">{{ textValue }}</textarea>
+                <textarea name="markdown" placeholder="" @input="changeBody">{{ bodyValue }}</textarea>
             </div>
         </transition-slideup>
         <button type="submit">{{ btnText }}</button>
@@ -34,7 +34,7 @@
             editing () {
                 return this.$store.state.editing_event_note
             },
-            textValue () {
+            bodyValue () {
                 return this.editing && this.editing.body
             }
         },

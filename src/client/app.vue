@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapper">
+    <div :class="['wrapper', { searching }]">
         <header-module></header-module>
-        <home></home>
+        <dashboard></dashboard>
 
         <transition name="fade">
             <div
@@ -19,7 +19,7 @@
 
 <script>
     import headerModule from './components/header-module.vue'
-    import home from './components/home.vue'
+    import dashboard from './views/dashboard.vue'
     import router from './router'
     import store from './store'
 
@@ -27,12 +27,13 @@
         el: '#app',
         components: {
             'header-module': headerModule,
-            'home': home
+            'dashboard': dashboard
         },
         router: router,
         store: store,
         computed: {
-            screenOn () { return this.$store.state.screenOn }
+            screenOn () { return this.$store.state.screenOn },
+            searching () { return this.$store.state.searching }
         }
     }
 </script>
@@ -49,6 +50,9 @@
         margin: 0;
         -webkit-font-smoothing: antialiased;
         text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    }
+    ::-webkit-scrollbar {
+        display: none;
     }
     h1, h2, h3, h4, h5, h6 {
         font-weight: 400;
@@ -103,6 +107,13 @@
         transition: opacity .3s;
     }
     .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+    /* transitions */
+    .fast-fade-enter-active, .fast-fade-leave-active {
+        transition: opacity .1s;
+    }
+    .fast-fade-enter, .fast-fade-leave-to {
         opacity: 0;
     }
 </style>

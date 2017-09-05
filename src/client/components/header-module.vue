@@ -9,7 +9,6 @@
                 name="s"
                 value=""
                 @focus="initSearch"
-                @blur="destroySearch"
                 @input="searchInput">
             <div class="icon" @click="clickMag" v-html="magnifyingSVG"></div>
         </div>
@@ -34,9 +33,6 @@
             },
             initSearch () {
                 this.$store.commit('INIT_SEARCH')
-            },
-            destroySearch () {
-                this.$store.commit('DESTROY_SEARCH')
             },
             searchInput: _.debounce(async function(e){
                 const results = await searchEvents(e.target.value)
@@ -85,6 +81,7 @@
         border-bottom: 1px solid transparent;
         margin-right: 10px;
     }
+    .searching .search-module input,
     .search-module input:focus {
         border-color: #ffffff;
         width: 200px;

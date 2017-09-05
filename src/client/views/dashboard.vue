@@ -2,33 +2,32 @@
     <main class="home">
         <div class="row hero">
             <div class="column"></div>
-            <div class="column" v-html="group.description"></div>
+            <transition name="fade" appear>
+                <div v-if="group.description" class="column" v-html="group.description"></div>
+            </transition>
         </div>
 
-        <transition name="fade">
-            <div v-if="$store.state.searching" class="row search-results">
+        <transition name="fast-fade" mode="out-in">
+            <div v-if="$store.state.searching" class="row search-results" key="search-results">
                 <div class="column">
-                    <h3>Search Results</h3>
+                    <h3>
+                        <span>Search Results</span>
+                        <div class="close-search" @click="$store.commit('DESTROY_SEARCH')" v-html="xSVG"></div>
+                    </h3>
                     <div class="divider divider-sm"></div>
-                    <ul class="results">
-                        <event-list-item
-                            v-for="(evt, i) in $store.state.search_results"
-                            :event="evt"
-                            :key="`search-item-${ i }`">
-                        </event-list-item>
-                    </ul>
+                    <search-results></search-results>
                 </div>
             </div>
-            <div v-else class="row">
-                <div class="column">
+            <div v-else class="row" key="dash">
+                <div class="column past-meetups">
+                    <h3>Past Meetups</h3>
+                    <div class="divider divider-sm"></div>
                     <past-meetups></past-meetups>
                 </div>
                 <div class="column next-meetup">
                     <h3>Next Meetup</h3>
                     <div class="divider divider-sm"></div>
-                    <div class="next-meetup-module">
-
-                    </div>
+                    <next-meetup></next-meetup>
                 </div>
             </div>
         </transition>
@@ -36,15 +35,17 @@
 </template>
 
 <script>
-    import pastMeetupsCMP from './past-meetups.vue'
+    import pastMeetups from '../components/past-meetups.vue'
+    import nextMeetup from '../components/next-meetup.vue'
     import { getEvents } from '../utils'
+    import xIcon from '../icons/x.svg'
     import _ from 'lodash'
-    import 'whatwg-fetch'
 
     export default {
-        name: 'home',
+        name: 'dashboard',
         components: {
-            'past-meetups': pastMeetupsCMP
+            'past-meetups': pastMeetups,
+            'next-meetup': nextMeetup
         },
         data () {
             return {
@@ -59,7 +60,8 @@
             ]).catch(err => console.log('Error in home module:', err))
         },
         computed: {
-            loading () { return _.isEmpty(this.group) }
+            loading () { return _.isEmpty(this.group) },
+            xSVG () { return xIcon }
         },
         methods: {
             async setGroup () {
@@ -84,6 +86,7 @@
     .home .hero {
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         background-color: #39393b;
+        min-height: 261px;
         line-height: 2em;
     }
     .home .row {
@@ -131,18 +134,15 @@
         width: 50px;
     }
 
-    .search-results ul {
-        line-height: 1em;
-        padding: 0;
+    .close-search {
+        position: relative;
+        line-height: 10px;
+        cursor: pointer;
+        padding: 15px;
+        float: right;
+        top: -5px;
     }
-    .search-results ul li {
-        transition: all 0.2s;
-    }
-    .search-results ul:hover li {
-        opacity: 0.5;
-    }
-    .search-results ul li:hover {
-        padding-left: 5px;
-        opacity: 1;
+    .close-search svg * {
+        fill: #ffffff;
     }
 </style>

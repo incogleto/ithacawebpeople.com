@@ -11,8 +11,8 @@
 </template>
 
 <script>
-    import eventDetail from './event-detail.vue'
-    import eventForm from './event-form.vue'
+    import eventDetail from '../components/event-detail.vue'
+    import eventForm from '../components/event-form.vue'
     import xIcon from '../icons/x.svg'
     import _ from 'lodash'
 

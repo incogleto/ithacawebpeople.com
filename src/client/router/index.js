@@ -1,4 +1,4 @@
-import sidebarCMP from 'src/client/components/sidebar.vue'
+import sidebar from 'src/client/views/sidebar.vue'
 import VueRouter from 'vue-router'
 import store from '../store'
 import Vue from 'vue'
@@ -9,7 +9,7 @@ Vue.use( VueRouter )
 const routeTable = [
     {
         path: '/events/:event_id',
-        component: sidebarCMP,
+        component: sidebar,
         beforeEnter (to, from, next) {
             // preload event data with associated notes
             store.dispatch('GET_EVENT_NOTES', to.params.event_id)
