@@ -21,7 +21,8 @@ const handler = async (req, res, next) => {
         verified: new Date()
     })
 
-    return succeed({ res, msg: 'Successfully verified note.', add: { data: serializer(updatedNote) } })
+    return res.redirect(`/events/${ req.params.event_id }`)
+    // return succeed({ res, msg: 'Successfully verified note.', add: { data: serializer(updatedNote) } })
 }
 
 export default wrapRoute(handler)

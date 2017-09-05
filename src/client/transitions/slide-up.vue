@@ -4,7 +4,6 @@
         name="transition-slide"
         @before-enter="beforeEnter"
         @enter="enter"
-        @after-enter="afterEnter"
         @leave="leave"
         :css="false"
     >
@@ -23,9 +22,6 @@
             },
             enter (el, done) {
                 Velocity(el, 'slideDown', 300, done)
-            },
-            afterEnter (el, done) {
-                el.style.display = 'flex'
             },
             leave (el, done) {
                 Velocity(el, 'slideUp', 300, done)
