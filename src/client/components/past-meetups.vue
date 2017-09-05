@@ -22,6 +22,7 @@
                 before: new Date().getTime(),
                 limit: 6
             })
+            this.$emit('load')
         }
     }
 </script>

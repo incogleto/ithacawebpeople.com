@@ -25,8 +25,8 @@
             },
             formattedDesc () {
                 if ( !this.event.description ) return ''
-                const prepro = this.event.description.split('\n').join('\n\n')
-                return marked(prepro)
+                const clean = this.event.description.split('\n').join('\n\n')
+                return marked(_.truncate(clean, { length: 200 }))
             }
         },
         async created () {
@@ -35,20 +35,17 @@
                 order: 'ASC',
                 limit: 1
             }).then(_.first)
+            this.$emit('load')
         }
     }
 </script>
 
 <style scoped>
-    /*.next-meetup-module {
-        padding: 40px;
-        background-color: #ffffff;
-        color: #222;
-    }*/
     .title {
         text-transform: uppercase;
         letter-spacing: 2px;
         line-height: 1.6em;
+        font-weight: 300;
         font-size: 18px;
         margin: 0;
     }
@@ -61,6 +58,5 @@
         overflow: hidden;
         line-height: 2em;
         font-size: 16px;
-        margin: 1em 0;
     }
 </style>

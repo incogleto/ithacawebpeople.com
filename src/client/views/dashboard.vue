@@ -1,6 +1,6 @@
 <template>
     <main class="home">
-        <div class="row hero">
+        <div class="row hero" :style="heroStyling">
             <div class="column"></div>
             <transition name="fade" appear>
                 <div v-if="group.description" class="column" v-html="group.description"></div>
@@ -19,15 +19,15 @@
                 </div>
             </div>
             <div v-else class="row" key="dash">
-                <div class="column past-meetups">
+                <div :class="['column', 'past-meetups', { loading: !pastLoaded }]">
                     <h3>Past Meetups</h3>
                     <div class="divider divider-sm"></div>
-                    <past-meetups></past-meetups>
+                    <past-meetups @load="delayLoad('pastLoaded')"></past-meetups>
                 </div>
-                <div class="column next-meetup">
+                <div :class="['column', 'next-meetup', { loading: !nextLoaded }]">
                     <h3>Next Meetup</h3>
                     <div class="divider divider-sm"></div>
-                    <next-meetup></next-meetup>
+                    <next-meetup @load="delayLoad('nextLoaded')"></next-meetup>
                 </div>
             </div>
         </transition>
@@ -50,30 +50,33 @@
         data () {
             return {
                 group: {},
-                nextEvent: {}
+                pastLoaded: false,
+                nextLoaded: false
             }
         },
         created () {
-            return Promise.all([
-                this.setGroup(),
-                this.setNextEvent()
-            ]).catch(err => console.log('Error in home module:', err))
+            return this.setGroup().catch(err => console.log('Error in home module:', err))
         },
         computed: {
             loading () { return _.isEmpty(this.group) },
-            xSVG () { return xIcon }
+            xSVG () { return xIcon },
+            heroStyling () {
+                const isSearching = this.$store.state.searching
+                return isSearching ? {
+                    'min-height': 0,
+                    'height': 0
+                } : { height: '261px' }
+            }
         },
         methods: {
             async setGroup () {
                 const json = await fetch('/api/groups').then(r => r.json())
                 this.group = _.first(json.data)
             },
-            async setNextEvent () {
-                const evts = await getEvents({
-                    after: new Date().getTime(),
-                    limit: 1
-                })
-                this.nextEvent = _.first(evts)
+            delayLoad (key) {
+                return setTimeout(() => {
+                    this[key] = true
+                }, _.random(0, 150))
             }
         }
     }
@@ -84,9 +87,11 @@
         font-size: 20px;
     }
     .home .hero {
+        transition: all 0.3s;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         background-color: #39393b;
         min-height: 261px;
+        overflow: hidden;
         line-height: 2em;
     }
     .home .row {
@@ -96,6 +101,7 @@
         display: flex;
     }
     .column {
+        transition: all 0.3s ease;
         padding: 40px 0;
         width: 50%;
     }
@@ -109,6 +115,11 @@
     }
     .home .past-meetups h4 {
         font-size: 10px;
+    }
+
+    .home .column.loading {
+        transform: translateY(10px);
+        opacity: 0;
     }
 
     .divider {

@@ -2,9 +2,9 @@
     <div class="event-detail-module">
         <div class="event-meta">
             <h2 class="title">{{ event.title }}</h2>
-            <div class="evt-date">{{ formattedDate }}</div>
+            <div class="evt-date"></div>
         </div>
-        <div class="description">{{ event.description }}</div>
+        <div class="description" v-html="formattedDesc"></div>
 
         <div class="divider divider-md"></div>
 
@@ -54,6 +54,11 @@
             },
             formattedDate () {
                 return moment(this.event.date).format('MMMM Do, YYYY')
+            },
+            formattedDesc () {
+                if ( !this.event.description ) return ''
+                const clean = this.event.description.split('\n').join('\n\n')
+                return marked(clean)
             },
             formattedNoteDate () {
                 const stamp = this.editing ? new Date().getTime() : this.focussedNote.created_at
