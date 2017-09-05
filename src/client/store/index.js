@@ -12,7 +12,9 @@ export default new Vuex.Store({
         screenOn: false,
         events: {},
         notes: {},
-        editing_event_note: false
+        editing_event_note: false,
+        searching: false,
+        search_results: []
     },
     mutations: {
         'INITIALIZE_SCREEN': (state) => {
@@ -61,6 +63,18 @@ export default new Vuex.Store({
                 ...state.editing_event_note,
                 email
             }
+            return state
+        },
+        'INIT_SEARCH': (state) => {
+            state.searching = true
+            return state
+        },
+        'DESTROY_SEARCH': (state) => {
+            state.searching = false
+            return state
+        },
+        'SET_SEARCH_RESULTS': (state, results) => {
+            state.search_results = results
             return state
         }
     },

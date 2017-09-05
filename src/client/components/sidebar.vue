@@ -45,7 +45,7 @@
         background: #ffffff;
         position: fixed;
         color: #39393b;
-        z-index: 10;
+        z-index: 15;
         width: 50vw;
         flex-direction: column;
         display: flex;

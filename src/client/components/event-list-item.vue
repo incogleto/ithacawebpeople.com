@@ -24,6 +24,20 @@
 </script>
 
 <style scoped>
+    a {
+        display: block;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 2px;
+        font-size: 12px;
+        padding: 10px 0;
+    }
+    a span {
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
     .date {
         text-transform: none;
         font-size: 10px;

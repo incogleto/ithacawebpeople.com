@@ -90,6 +90,7 @@
 
     .screen {
         background-color: rgba(0, 0, 0, 0.6);
+        z-index: 14;
         position: fixed;
         bottom: 0;
         right: 0;

@@ -4,18 +4,34 @@
             <div class="column"></div>
             <div class="column" v-html="group.description"></div>
         </div>
-        <div class="row">
-            <div class="column">
-                <past-meetups></past-meetups>
-            </div>
-            <div class="column next-meetup">
-                <h3>Next Meetup</h3>
-                <div class="divider divider-sm"></div>
-                <div class="next-meetup-module">
 
+        <transition name="fade">
+            <div v-if="$store.state.searching" class="row search-results">
+                <div class="column">
+                    <h3>Search Results</h3>
+                    <div class="divider divider-sm"></div>
+                    <ul class="results">
+                        <event-list-item
+                            v-for="(evt, i) in $store.state.search_results"
+                            :event="evt"
+                            :key="`search-item-${ i }`">
+                        </event-list-item>
+                    </ul>
                 </div>
             </div>
-        </div>
+            <div v-else class="row">
+                <div class="column">
+                    <past-meetups></past-meetups>
+                </div>
+                <div class="column next-meetup">
+                    <h3>Next Meetup</h3>
+                    <div class="divider divider-sm"></div>
+                    <div class="next-meetup-module">
+
+                    </div>
+                </div>
+            </div>
+        </transition>
     </main>
 </template>
 
@@ -71,6 +87,7 @@
         line-height: 2em;
     }
     .home .row {
+        justify-content: center;
         padding: 0 60px;
         flex-wrap: wrap;
         display: flex;
@@ -112,5 +129,20 @@
     .divider-sm::after {
         margin: 0;
         width: 50px;
+    }
+
+    .search-results ul {
+        line-height: 1em;
+        padding: 0;
+    }
+    .search-results ul li {
+        transition: all 0.2s;
+    }
+    .search-results ul:hover li {
+        opacity: 0.5;
+    }
+    .search-results ul li:hover {
+        padding-left: 5px;
+        opacity: 1;
     }
 </style>

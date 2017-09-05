@@ -35,21 +35,6 @@
         line-height: 1em;
         padding: 0;
     }
-    .past-meetups-module .events a {
-        display: block;
-        text-transform: uppercase;
-        text-decoration: none;
-        letter-spacing: 2px;
-        font-size: 12px;
-        padding: 10px 0;
-    }
-    .past-meetups-module .events a span {
-        display: block;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
     .past-meetups-module ul li {
         transition: all 0.2s;
     }

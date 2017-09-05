@@ -43,6 +43,15 @@ export const getNotes = async event_id => {
     return json.data
 }
 
+// search for events
+export const searchEvents = async search => {
+    const json = await fetch(`/api/events/?s=${ search }`).then(r => r.json())
+    if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
+
+    // all good, return data
+    return json.data
+}
+
 // save new note to event
 export const saveNote = async (event_id, params) => {
 
