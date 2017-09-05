@@ -1,7 +1,7 @@
 <template>
     <div class="past-meetups-module">
         <h3>Past Meetups</h3>
-        <div class="divider-sm"></div>
+        <div class="divider divider-sm"></div>
         <ul class="events">
             <event-list-item
                 v-for="(evt, i) in events"

@@ -12,7 +12,7 @@ export default new Vuex.Store({
         screenOn: false,
         events: {},
         notes: {},
-        editing: {}
+        editing_event_note: false
     },
     mutations: {
         'INITIALIZE_SCREEN': (state) => {
@@ -38,22 +38,28 @@ export default new Vuex.Store({
             return state
         },
         'INITIALIZE_EVENT_EDIT': (state, event_id) => {
-            state.editing = {
-                ...state.editing,
-                [event_id]: {
-                    email: '',
-                    body: _.get(state, `notes[${ event_id }][0].body`) || ''
-                }
+            state.editing_event_note = {
+                event_id: event_id,
+                email: '',
+                body: _.get(state, `notes[${ event_id }][0].body`) || ''
             }
             return state
         },
-        'EDIT_EVENT_BODY': (state, { event_id, body }) => {
-            state.editing = {
-                ...state.editing,
-                [event_id]: {
-                    ...state.editing[event_id],
-                    body
-                }
+        'TEARDOWN_EVENT_EDIT': (state) => {
+            state.editing_event_note = false
+            return state
+        },
+        'EDIT_EVENT_BODY': (state, body) => {
+            state.editing_event_note = {
+                ...state.editing_event_note,
+                body
+            }
+            return state
+        },
+        'EDIT_EVENT_EMAIL': (state, email) => {
+            state.editing_event_note = {
+                ...state.editing_event_note,
+                email
             }
             return state
         }

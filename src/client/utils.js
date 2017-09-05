@@ -42,3 +42,21 @@ export const getNotes = async event_id => {
     // all good, return data
     return json.data
 }
+
+// save new note to event
+export const saveNote = async (event_id, params) => {
+
+    const headers = new Headers()
+    headers.append('Content-Type', 'application/json')
+
+    const ops = {
+        headers,
+        method: 'POST',
+        body: JSON.stringify(_.pick(params, ['email', 'body']))
+    }
+    const json = await fetch(`/api/events/${ event_id }/notes`, ops).then(r => r.json())
+    if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
+
+    // all good, return data
+    return json.data
+}

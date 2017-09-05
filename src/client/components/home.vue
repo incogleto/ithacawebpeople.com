@@ -10,7 +10,7 @@
             </div>
             <div class="column next-meetup">
                 <h3>Next Meetup</h3>
-                <div class="divider-sm"></div>
+                <div class="divider divider-sm"></div>
                 <div class="next-meetup-module">
 
                 </div>
@@ -91,18 +91,26 @@
         font-size: 10px;
     }
 
-    .divider-sm {
+    .divider {
         position: relative;
-        margin: 1.5em 0;
+        margin: 2em 0;
         height: 1px;
     }
-    .divider-sm::after {
+    .divider::after {
         background-color: #ffffff;
-        content: '';
         position: absolute;
-        width: 50px;
+        content: '';
+        margin: auto;
         height: 1px;
+        right: 0;
         left: 0;
         top: 0;
+    }
+    .divider-sm {
+        margin: 1.5em 0;
+    }
+    .divider-sm::after {
+        margin: 0;
+        width: 50px;
     }
 </style>

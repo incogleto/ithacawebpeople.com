@@ -53,6 +53,9 @@
     h1, h2, h3, h4, h5, h6 {
         font-weight: 400;
     }
+    strong {
+        font-weight: 400;
+    }
     a {
         color: #ffffff;
     }
@@ -62,6 +65,22 @@
     *:focus {
         outline: none;
     }
+    button {
+        transition: background 0.2s;
+        -webkit-appearance: none;
+        text-transform: uppercase;
+        background: #39393b;
+        letter-spacing: 2px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 12px;
+        color: #ffffff;
+        border: none;
+    }
+    button:hover {
+        background-color: #222222;
+    }
+
     .wrapper main {
         padding: 90px 0 60px;
     }

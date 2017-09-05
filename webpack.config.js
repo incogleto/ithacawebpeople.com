@@ -52,7 +52,11 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif|svg)$/,
+                test: /\.svg$/,
+                loader: 'svg-inline-loader?removeSVGTagAttrs=false'
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
                 loader: 'url-loader',
                 options: {
                     limit: 10000,

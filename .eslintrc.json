@@ -23,7 +23,9 @@
     "setInterval": true,
     "Buffer": true,
     "__dirname": true,
-    "fetch": true
+    "fetch": true,
+    "FormData": true,
+    "Headers": true
    },
   "rules": {
     "no-console": 1,

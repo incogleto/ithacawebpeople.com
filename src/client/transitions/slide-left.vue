@@ -34,10 +34,8 @@
         },
         methods: {
             setRect (el) {
-                if ( _.isEmpty(this.rect) ) {
-                    const dims = el.getBoundingClientRect()
-                    this.rect = _.pick(dims, ['top', 'left', 'right', 'bottom'])
-                }
+                const dims = el.getBoundingClientRect()
+                this.rect = _.pick(dims, ['top', 'left', 'right', 'bottom'])
             },
             beforeEnter (el, done) {
                 this.setRect(el)
@@ -56,7 +54,10 @@
                 Velocity(el, { clipLeft: 0 }, {
                     duration: this.speed,
                     easing: this.easing,
-                    complete: done
+                    complete: () => {
+                        el.style.clip = ''
+                        done()
+                    }
                 })
             },
             beforeLeave (el, done) {
@@ -75,7 +76,10 @@
                 return Velocity(el, { clipLeft: this.width }, {
                     duration: this.speed,
                     easing: this.easing,
-                    complete: done
+                    complete: () => {
+                        el.style.clip = ''
+                        done()
+                    }
                 })
             }
         }
