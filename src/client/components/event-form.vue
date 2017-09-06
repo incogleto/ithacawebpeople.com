@@ -1,10 +1,10 @@
 <template>
     <form class="event-form-module" @submit.prevent="handleSubmit">
-        <transition-slideup>
-            <div v-if="step == 'email'" class="email-input" @input="changeEmail">
+        <transition-slideup :speed="300" easing="easeOutQuart">
+            <div v-if="step == 'email'" class="email-input" @input="changeEmail" key="input">
                 <input name="email" placeholder="Email Address" type="email" :value="editing.email">
             </div>
-            <div v-else-if="step == 'body'" class="markdown-input">
+            <div v-else-if="step == 'body'" class="markdown-input" key="textarea">
                 <textarea name="markdown" placeholder="" @input="changeBody">{{ bodyValue }}</textarea>
             </div>
         </transition-slideup>
@@ -105,11 +105,11 @@
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
     .email-input {
-        padding-bottom: 10px;
+        margin-bottom: 10px;
     }
     .markdown-input {
         position: relative;
-        margin-bottom: 1em;
+        margin-bottom: 10px;
         height: 150px;
     }
     textarea {

@@ -1,11 +1,13 @@
 <template>
     <main class="home">
-        <div class="row hero" :style="heroStyling">
-            <div class="column"></div>
-            <transition name="fade" appear>
-                <div v-if="group.description" class="column" v-html="group.description"></div>
-            </transition>
-        </div>
+        <transition-slideup :speed="300" easing="easeOutSine">
+            <div v-if="!$store.state.searching" class="row hero">
+                <div class="column"></div>
+                <transition name="fade" appear>
+                    <div v-if="group.description" class="column" v-html="group.description"></div>
+                </transition>
+            </div>
+        </transition-slideup>
 
         <transition name="fast-fade" mode="out-in">
             <div v-if="$store.state.searching" class="row search-results" key="search-results">
@@ -59,15 +61,7 @@
         },
         computed: {
             loading () { return _.isEmpty(this.group) },
-            xSVG () { return xIcon },
-            heroStyling () {
-                const isSearching = this.$store.state.searching
-                const isMobile = this.$store.state.breakpoint == 'mobile'
-                return isSearching ? {
-                    'min-height': 0,
-                    'height': 0
-                } : { height: isMobile ? 'auto' : '261px' }
-            }
+            xSVG () { return xIcon }
         },
         methods: {
             async setGroup () {
@@ -88,7 +82,6 @@
         font-size: 20px;
     }
     .home .hero {
-        transition: all 0.3s;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         background-color: #39393b;
         min-height: 261px;
