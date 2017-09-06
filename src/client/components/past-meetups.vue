@@ -33,6 +33,9 @@
         padding: 0;
     }
 
+    ul.event-list {
+        list-style-type: none;
+    }
     .event-list li {
         transition: all 0.2s;
     }

@@ -66,9 +66,6 @@
     a {
         color: #ffffff;
     }
-    ul {
-        list-style-type: none;
-    }
     *:focus {
         outline: none;
     }
