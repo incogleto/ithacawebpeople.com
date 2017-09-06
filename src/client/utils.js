@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const baseURL = process.env.BASE_URL || 'https://www.ithacawebpeople.com'
+const baseURL = process.env.BASE_URL || ''
 
 // query events
 export const getEvents = async params => {

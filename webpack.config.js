@@ -8,17 +8,19 @@ require('./environment')
 const isProd = process.env.NODE_ENV === 'production'
 
 const devPlugins = [
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'BASE_URL'])
+    new webpack.EnvironmentPlugin({
+        NODE_ENV: 'development',
+        BASE_URL: 'https://www.ithacawebpeople.com'
+    })
 ]
-const prodPlugins = [
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'BASE_URL']),
+const prodPlugins = devPlugins.concat([
     new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false }
     }),
     new ExtractTextPlugin({
         filename: 'build.css'
     })
-]
+])
 
 module.exports = {
     entry: ['whatwg-fetch', './src/client/index.js'],
