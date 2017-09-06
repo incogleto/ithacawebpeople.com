@@ -1,5 +1,5 @@
 require('./environment')
-const { NODE_ENV } = process.env
+const { NODE_ENV, DATABASE_URL } = process.env
 
 // require from dist by default
 let source = 'dist'
@@ -11,6 +11,6 @@ if ( NODE_ENV == 'development' ){
     source = 'src'
 }
 
-// kick off server
+// kick off server if we have db
 require(`./${ source }/server`)
-require(`./${ source }/server/worker`)
+if ( DATABASE_URL ) require(`./${ source }/server/worker`)

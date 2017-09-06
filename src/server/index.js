@@ -14,7 +14,8 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 // route api
-app.use('/api', [jwtAuth], api)
+if ( process.env.DATABASE_URL )
+    app.use('/api', [jwtAuth], api)
 
 app.use((req, res, next) => {
     return res.sendFile(path.resolve(__dirname, 'index.html'))

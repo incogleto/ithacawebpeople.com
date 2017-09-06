@@ -5,8 +5,11 @@ import noteSchema from '~/src/server/schemas/note'
 import sendMail from '~/src/server/utils/sendmail'
 import knex from '~/src/server/db'
 import jwt from 'jwt-simple'
+import marked from 'marked'
 import crypto from 'crypto'
 import _ from 'lodash'
+
+const baseURL = process.env.BASE_URL || 'https://www.ithacawebpeople.com'
 
 const handler = async (req, res, next) => {
 
@@ -32,19 +35,14 @@ const handler = async (req, res, next) => {
 
     if ( !noteRecord.verified ){
 
-        const URL = `https://www.ithacawebpeople.com/api/events/${ req.params.event_id }/notes/${ note.id }/verify?email=${ note.email }&token=${ note.token }`
-        const msg = `Thanks for submitting your note to Ithacawebpeople.com.
-
-        Please verify your email by visiting this URL: ${ URL }
-        Once verified, your message will show publicly.
-
-        Thanks!
-        Ithaca Web People`
+        const URL = `${ baseURL }/api/events/${ req.params.event_id }/notes/${ note.id }/verify?email=${ note.email }&token=${ note.token }`
+        const body = `Thanks for submitting your note to Ithacawebpeople.com. \n\nPlease verify your email by visiting this URL: ${ URL } \n Once verified, your message will show publicly. \n\nThanks! \nIthaca Web People`
+        const html = `### Thanks for submitting your note to Ithacawebpeople.com. \n\nPlease verify your email by clicking [this link](${ URL }). Once verified, your message will show publicly. \n\nThanks! <br />Ithaca Web People`
         await sendMail({
             to: noteRecord.email,
             subject: `Message Verification`,
-            body: msg,
-            html: msg
+            body,
+            html: `<html><body>${ marked(html) }</body></html>`
         })
     }
 

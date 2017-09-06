@@ -3,9 +3,15 @@ const resolve = file => path.resolve( __dirname, file )
 const webpack = require('webpack')
 const path = require('path')
 
+require('./environment')
+
 const isProd = process.env.NODE_ENV === 'production'
 
+const devPlugins = [
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'BASE_URL'])
+]
 const prodPlugins = [
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'BASE_URL']),
     new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false }
     }),
@@ -78,5 +84,5 @@ module.exports = {
         maxEntrypointSize: 300000,
         hints: isProd ? 'warning' : false
     },
-    plugins: isProd ? prodPlugins : []
+    plugins: isProd ? prodPlugins : devPlugins
 }

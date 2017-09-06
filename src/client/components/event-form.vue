@@ -65,12 +65,14 @@
                     body: this.editing.body
                 })
 
+                console.log(json)
                 const body = json.verified ?
-                    `## Thanks! \n\nWe've sent you a confirmation email. \nOnce you've confirmed, your changes will be visible.`.trim() :
-                    `Thanks, your changes have been made.`
+                    `### Thanks, your changes have been made.` :
+                    `## Thanks! \n\nWe've sent you a confirmation email. <br />Once you've confirmed, your changes will be visible.`.trim()
 
                 this.step = 'none'
                 this.$store.commit('SET_SIDE_MESSAGE', body)
+                this.$store.dispatch('GET_EVENT_NOTES', this.editing.event_id)
                 setTimeout(() => {
                     this.$store.commit('SET_SIDE_MESSAGE')
                     this.$store.commit('TEARDOWN_EVENT_EDIT')

@@ -4,8 +4,8 @@
         <div class="content">
             <transition name="fade" mode="out-in">
                 <div
-                    v-if="$store.state.sidebarMessage"
                     class="sidebar-message"
+                    v-if="$store.state.sidebarMessage"
                     v-html="$store.state.sidebarMessage">
                 </div>
                 <event-detail v-else></event-detail>
@@ -66,7 +66,8 @@
         flex: 1 1 auto;
     }
     .event-sidebar-module .sidebar-message {
-        padding: 60px;
+        text-align: center;
+        padding: 100px;
     }
     .event-sidebar-module .content .inner {
         padding: 45px 60px;

@@ -3,14 +3,20 @@
         <router-link to="/">
             <h2>Ithaca Web People</h2>
         </router-link>
-        <div class="search-module">
-            <input
-                type="text"
-                name="s"
-                value=""
-                @focus="initSearch"
-                @input="searchInput">
-            <div class="icon" @click="clickMag" v-html="magnifyingSVG"></div>
+        <div class="menu">
+            <div class="items">
+                <a href="https://www.meetup.com/ithaca-web-people/" target="_blank">Meetup</a>
+                <a href="https://github.com/funkhaus/ithacawebpeople.com" target="_blank">Github</a>
+            </div>
+            <div class="search-module">
+                <input
+                    type="text"
+                    name="s"
+                    value=""
+                    @focus="initSearch"
+                    @input="searchInput">
+                <div class="icon" @click="clickMag" v-html="magnifyingSVG"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -64,8 +70,30 @@
         font-size: 18px;
         margin: 0;
     }
+
+    .header-module .menu .items {
+        margin-right: 20px;
+    }
+    .header-module .menu > * {
+        display: inline-block;
+    }
+    .header-module .menu a {
+        transition: opacity 0.3s;
+        padding: 0 20px;
+        font-size: 20px;
+    }
+
+    .header-module .menu .items:hover a {
+        opacity: 0.5;
+    }
+    .header-module .menu .items a:hover {
+        opacity: 1;
+    }
+
     .search-module .icon {
+        position: relative;
         cursor: pointer;
+        top: 5px;
     }
     .search-module > * {
         display: inline-block;

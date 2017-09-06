@@ -1,5 +1,7 @@
 import _ from 'lodash'
 
+const baseURL = process.env.BASE_URL || 'https://www.ithacawebpeople.com'
+
 // query events
 export const getEvents = async params => {
     params = _.pick(params, ['limit', 'before', 'after', 'order', 'orderBy'])
@@ -12,7 +14,7 @@ export const getEvents = async params => {
     }).join('&')
 
     // run request, get as json
-    const json = await fetch(`/api/events?${ qs }`, { credentials: 'same-origin' }).then(r => r.json())
+    const json = await fetch(`${ baseURL }/api/events?${ qs }`, { credentials: 'same-origin' }).then(r => r.json())
     if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
 
     // all good, return data
@@ -21,7 +23,7 @@ export const getEvents = async params => {
 
 // get single event
 export const getEvent = async id => {
-    const json = await fetch(`/api/events/${ id }`, { credentials: 'same-origin' }).then(r => r.json())
+    const json = await fetch(`${ baseURL }/api/events/${ id }`, { credentials: 'same-origin' }).then(r => r.json())
     if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
 
     // all good, return data
@@ -30,7 +32,7 @@ export const getEvent = async id => {
 
 // get notes for single event
 export const getNotes = async event_id => {
-    const json = await fetch(`/api/events/${ event_id }/notes`, { credentials: 'same-origin' }).then(r => r.json())
+    const json = await fetch(`${ baseURL }/api/events/${ event_id }/notes`, { credentials: 'same-origin' }).then(r => r.json())
     if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
 
     // all good, return data
@@ -39,7 +41,7 @@ export const getNotes = async event_id => {
 
 // search for events
 export const searchEvents = async search => {
-    const json = await fetch(`/api/events/?s=${ search }`, { credentials: 'same-origin' }).then(r => r.json())
+    const json = await fetch(`${ baseURL }/api/events/?s=${ search }`, { credentials: 'same-origin' }).then(r => r.json())
     if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
 
     // all good, return data
@@ -47,7 +49,7 @@ export const searchEvents = async search => {
 }
 
 export const getSelf = async () => {
-    const json = await fetch(`/api/self`, { credentials: 'same-origin' }).then(r => r.json())
+    const json = await fetch(`${ baseURL }/api/self`, { credentials: 'same-origin' }).then(r => r.json())
     if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
 
     // all good, return data
@@ -67,7 +69,7 @@ export const saveNote = async (event_id, params) => {
         body: JSON.stringify(_.pick(params, ['email', 'body'])),
         credentials: 'same-origin'
     }
-    const json = await fetch(`/api/events/${ event_id }/notes`, ops).then(r => r.json())
+    const json = await fetch(`${ baseURL }/api/events/${ event_id }/notes`, ops).then(r => r.json())
     if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
 
     // all good, return data

@@ -2,8 +2,10 @@ import { succeed } from '~/src/server/utils/responses'
 import groupsRoute from './groups'
 import eventsRoute from './events'
 import { Router } from 'express'
+import cors from 'cors'
 
 const router = new Router({ mergeParams: true })
+router.use(cors())
 
 router.use('/self', (req, res) => {
     return succeed({ res, msg: 'Successfully retrieved self.', add: { data: { email: req.user || null } } })
