@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./",
-    "dev": "webpack --watch & nodemon ./",
+    "dev": "rm -rf ./dist/public && mkdir -p dist && cp -rf src/public dist/public && webpack --watch & nodemon ./",
     "build": "NODE_ENV=production npm run build:client && NODE_ENV=production npm run build:server",
     "build:client": "rm -rf ./dist/public && mkdir -p dist && cp -rf src/public dist/public && webpack --progress --hide-modules",
     "build:server": "rm -rf dist/server && mkdir -p dist && cp -rf src/server dist/server && babel ./src/server --out-dir ./dist/server",

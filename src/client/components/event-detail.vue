@@ -82,7 +82,6 @@
         font-size: 18px;
     }
     .markdown ul {
-        list-style-type: initial;
         padding-left: 20px;
     }
     .markdown a {
