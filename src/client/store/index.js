@@ -1,4 +1,4 @@
-import { getEvent, getNotes } from '../utils'
+import { getEvent, getNotes, getSelf } from '../utils'
 import marked from 'marked'
 import Vuex from 'vuex'
 import _ from 'lodash'
@@ -9,6 +9,7 @@ Vue.use( Vuex )
 
 export default new Vuex.Store({
     state: {
+        user: null,
         screenOn: false,
         events: {},
         notes: {},
@@ -18,6 +19,10 @@ export default new Vuex.Store({
         sidebarMessage: ''
     },
     mutations: {
+        'SET_USER': (state, user) => {
+            if ( user ) return state.user = user
+            return state.user = null
+        },
         'INITIALIZE_SCREEN': (state) => {
             state.screenOn = true
             return state
@@ -43,7 +48,7 @@ export default new Vuex.Store({
         'INITIALIZE_EVENT_EDIT': (state, event_id) => {
             state.editing_event_note = {
                 event_id: event_id,
-                email: '',
+                email: _.get(state, 'user.email') || '',
                 body: _.get(state, `notes[${ event_id }][0].body`) || ''
             }
             return state
@@ -95,6 +100,11 @@ export default new Vuex.Store({
             const notes = await getNotes(event_id)
             context.commit('SET_EVENT_NOTES', { event_id, notes })
             return notes
+        },
+        'FETCH_USER': async (context) => {
+            const self = await getSelf()
+            context.commit('SET_USER', self)
+            return self
         }
     }
 })

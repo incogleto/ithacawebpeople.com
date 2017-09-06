@@ -29,6 +29,9 @@
             'header-module': headerModule,
             'dashboard': dashboard
         },
+        created () {
+            this.$store.dispatch('FETCH_USER')
+        },
         router: router,
         store: store,
         computed: {

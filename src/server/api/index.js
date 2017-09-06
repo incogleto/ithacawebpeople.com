@@ -5,9 +5,13 @@ import { Router } from 'express'
 
 const router = new Router({ mergeParams: true })
 
-// heartbeat
+router.use('/self', (req, res) => {
+    return succeed({ res, msg: 'Successfully retrieved self.', add: { data: { email: req.user || null } } })
+})
 router.use('/events', eventsRoute)
 router.use('/groups', groupsRoute)
+
+// heartbeat
 router.use('/', (req, res) => succeed({ res, msg: 'API is up and running.' }))
 
 export default router

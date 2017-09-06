@@ -46,6 +46,15 @@ export const searchEvents = async search => {
     return json.data
 }
 
+export const getSelf = async () => {
+    const json = await fetch(`/api/self`, { credentials: 'same-origin' }).then(r => r.json())
+    if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching events')
+
+    // all good, return data
+    const user = json.data.email ? json.data : null
+    return user
+}
+
 // save new note to event
 export const saveNote = async (event_id, params) => {
 

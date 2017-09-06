@@ -2,7 +2,7 @@
     <form class="event-form-module" @submit.prevent="handleSubmit">
         <transition-slideup>
             <div v-if="step == 'email'" class="email-input" @input="changeEmail">
-                <input name="email" placeholder="Email Address" type="email">
+                <input name="email" placeholder="Email Address" type="email" :value="editing.email">
             </div>
             <div v-else-if="step == 'body'" class="markdown-input">
                 <textarea name="markdown" placeholder="" @input="changeBody">{{ bodyValue }}</textarea>
