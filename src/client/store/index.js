@@ -1,4 +1,5 @@
 import { getEvent, getNotes } from '../utils'
+import marked from 'marked'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import Vue from 'vue'
@@ -13,7 +14,8 @@ export default new Vuex.Store({
         notes: {},
         editing_event_note: false,
         searching: false,
-        search_results: []
+        search_results: [],
+        sidebarMessage: ''
     },
     mutations: {
         'INITIALIZE_SCREEN': (state) => {
@@ -75,6 +77,10 @@ export default new Vuex.Store({
         'SET_SEARCH_RESULTS': (state, results) => {
             state.search_results = results
             return state
+        },
+        'SET_SIDE_MESSAGE': (state, message) => {
+            if ( message ) state.sidebarMessage = marked(message)
+            else state.sidebarMessage = ''
         }
     },
     actions: {

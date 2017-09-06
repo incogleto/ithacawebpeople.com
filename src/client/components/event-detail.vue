@@ -47,7 +47,7 @@
             noteMarkdown () {
                 // when editing, text is text from textarea.
                 // otherwise use text of most recent note
-                const text = this.editing && this.editing.body || this.focussedNote.body
+                const text = this.editing && this.editing.body || this.focussedNote.body || ''
 
                 // format markdown
                 return marked(text)

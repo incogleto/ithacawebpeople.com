@@ -32,10 +32,10 @@
         line-height: 1em;
         padding: 0;
     }
-    .past-meetups-module li {
+
+    .event-list li {
         transition: all 0.2s;
     }
-
     .event-list li a {
         position: relative;
     }

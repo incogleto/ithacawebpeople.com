@@ -2,7 +2,14 @@
     <div :class="['event-sidebar-module', { editing }]">
         <router-link to="/" class="close" v-html="xSVG"></router-link>
         <div class="content">
-            <event-detail></event-detail>
+            <transition name="fade" mode="out-in">
+                <div
+                    v-if="$store.state.sidebarMessage"
+                    class="sidebar-message"
+                    v-html="$store.state.sidebarMessage">
+                </div>
+                <event-detail v-else></event-detail>
+            </transition>
         </div>
         <div class="tray">
             <event-form></event-form>
@@ -57,6 +64,9 @@
         -webkit-overflow-scrolling: touch;
         overflow: auto;
         flex: 1 1 auto;
+    }
+    .event-sidebar-module .sidebar-message {
+        padding: 60px;
     }
     .event-sidebar-module .content .inner {
         padding: 45px 60px;

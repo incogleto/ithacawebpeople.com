@@ -59,10 +59,22 @@
                         this.$el.querySelector('textarea').focus()
                     }, 100)
                 }
-                const res = await saveNote(this.editing.event_id, {
+
+                const json = await saveNote(this.editing.event_id, {
                     email: this.editing.email,
                     body: this.editing.body
                 })
+
+                const body = `
+                    ## Thanks! \n\nWe've sent you a confirmation email. \nOnce you've confirmed, your changes will be visible.
+                `.trim()
+
+                this.step = 'none'
+                this.$store.commit('SET_SIDE_MESSAGE', body)
+                setTimeout(() => {
+                    this.$store.commit('SET_SIDE_MESSAGE')
+                    this.$store.commit('TEARDOWN_EVENT_EDIT')
+                }, 3 * 1000)
             }
         }
     }

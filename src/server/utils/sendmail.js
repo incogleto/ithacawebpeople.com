@@ -14,6 +14,7 @@ export default (ops) => {
         const settings = {
             subject: 'Message Verifiction',
             body: '',
+            html: '',
             ...ops,
             from: `Ithaca Web People <bot@${ MAILGUN_DOMAIN }>`
         }
