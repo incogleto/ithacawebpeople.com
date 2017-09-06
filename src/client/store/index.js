@@ -16,7 +16,8 @@ export default new Vuex.Store({
         editing_event_note: false,
         searching: false,
         search_results: [],
-        sidebarMessage: ''
+        sidebarMessage: '',
+        breakpoint: ''
     },
     mutations: {
         'SET_USER': (state, user) => {
@@ -86,6 +87,12 @@ export default new Vuex.Store({
         'SET_SIDE_MESSAGE': (state, message) => {
             if ( message ) state.sidebarMessage = marked(message)
             else state.sidebarMessage = ''
+            return state
+        },
+        'SET_BREAKPOINT': (state, breakpoint) => {
+            if ( breakpoint ) state.breakpoint = breakpoint
+            else state.breakpoint = 'desktop'
+            return state
         }
     },
     actions: {

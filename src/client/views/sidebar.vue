@@ -60,6 +60,9 @@
         right: 0;
         top: 0;
     }
+    .mobile .event-sidebar-module {
+        width: 100%;
+    }
     .event-sidebar-module .content {
         -webkit-overflow-scrolling: touch;
         overflow: auto;

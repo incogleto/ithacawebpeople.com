@@ -1,5 +1,5 @@
 <template>
-    <div :class="['wrapper', { searching }]">
+    <div :class="['wrapper', { searching }, breakpoint]">
         <header-module></header-module>
         <dashboard></dashboard>
 
@@ -31,12 +31,22 @@
         },
         created () {
             this.$store.dispatch('FETCH_USER')
+            window.addEventListener('resize', this.setBreakpoint, true)
+            this.setBreakpoint()
         },
         router: router,
         store: store,
         computed: {
+            breakpoint () { return this.$store.state.breakpoint },
             screenOn () { return this.$store.state.screenOn },
             searching () { return this.$store.state.searching }
+        },
+        methods: {
+            setBreakpoint () {
+                const width = window.innerWidth
+                if ( width < 750 && this.breakpoint != 'mobile' ) this.$store.commit('SET_BREAKPOINT', 'mobile')
+                else if ( width >= 750 && this.breakpoint != 'desktop' ) this.$store.commit('SET_BREAKPOINT', 'desktop')
+            }
         }
     }
 </script>

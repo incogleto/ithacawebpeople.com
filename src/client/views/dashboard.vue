@@ -62,10 +62,11 @@
             xSVG () { return xIcon },
             heroStyling () {
                 const isSearching = this.$store.state.searching
+                const isMobile = this.$store.state.breakpoint == 'mobile'
                 return isSearching ? {
                     'min-height': 0,
                     'height': 0
-                } : { height: '261px' }
+                } : { height: isMobile ? 'auto' : '261px' }
             }
         },
         methods: {
@@ -105,9 +106,15 @@
         padding: 40px 0;
         width: 50%;
     }
+    .mobile .column {
+        width: 100%;
+    }
     .home .column:nth-child(odd) {
         box-sizing: border-box;
         padding-right: 100px;
+    }
+    .mobile .home .column:nth-child(odd) {
+        padding-right: 0;
     }
     .home .past-meetups .description,
     .home .past-meetups .button {

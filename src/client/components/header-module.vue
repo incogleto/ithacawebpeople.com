@@ -8,7 +8,7 @@
                 <a href="https://www.meetup.com/ithaca-web-people/" target="_blank">Meetup</a>
                 <a href="https://github.com/funkhaus/ithacawebpeople.com" target="_blank">Github</a>
             </div>
-            <div class="search-module">
+            <div v-if="$store.state.breakpoint == 'desktop'" class="search-module">
                 <input
                     type="text"
                     name="s"
@@ -71,9 +71,6 @@
         margin: 0;
     }
 
-    .header-module .menu .items {
-        margin-right: 20px;
-    }
     .header-module .menu > * {
         display: inline-block;
     }
@@ -81,6 +78,10 @@
         transition: opacity 0.3s;
         padding: 0 20px;
         font-size: 20px;
+    }
+    .mobile .header-module .menu a {
+        padding: 0 5px;
+        font-size: 16px;
     }
 
     .header-module .menu .items:hover a {
@@ -90,6 +91,9 @@
         opacity: 1;
     }
 
+    .search-module {
+        margin-left: 20px;
+    }
     .search-module .icon {
         position: relative;
         cursor: pointer;
