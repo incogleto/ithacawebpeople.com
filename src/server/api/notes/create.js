@@ -29,21 +29,24 @@ const handler = async (req, res, next) => {
 
     // create new note record
     const note = await knex('notes').insert(noteRecord, '*').then(_.first)
-    const URL = `https://www.ithacawebpeople.com/api/events/${ req.params.event_id }/notes/${ note.id }/verify?email=${ note.email }&token=${ note.token }`
 
-    const msg = `Thanks for submitting your note to Ithacawebpeople.com.
+    if ( !noteRecord.verified ){
 
-    Please verify your email by visiting this URL: ${ URL }
-    Once verified, your message will show publicly.
+        const URL = `https://www.ithacawebpeople.com/api/events/${ req.params.event_id }/notes/${ note.id }/verify?email=${ note.email }&token=${ note.token }`
+        const msg = `Thanks for submitting your note to Ithacawebpeople.com.
 
-    Thanks!
-    Ithaca Web People`
-    await sendMail({
-        to: noteRecord.email,
-        subject: `Message Verification`,
-        body: msg,
-        html: msg
-    })
+        Please verify your email by visiting this URL: ${ URL }
+        Once verified, your message will show publicly.
+
+        Thanks!
+        Ithaca Web People`
+        await sendMail({
+            to: noteRecord.email,
+            subject: `Message Verification`,
+            body: msg,
+            html: msg
+        })
+    }
 
     // set token
     const token = jwt.encode({
