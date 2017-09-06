@@ -65,9 +65,9 @@
                     body: this.editing.body
                 })
 
-                const body = `
-                    ## Thanks! \n\nWe've sent you a confirmation email. \nOnce you've confirmed, your changes will be visible.
-                `.trim()
+                const body = json.verified ?
+                    `## Thanks! \n\nWe've sent you a confirmation email. \nOnce you've confirmed, your changes will be visible.`.trim() :
+                    `Thanks, your changes have been made.`
 
                 this.step = 'none'
                 this.$store.commit('SET_SIDE_MESSAGE', body)

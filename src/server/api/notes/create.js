@@ -4,6 +4,7 @@ import wrapRoute from '~/src/server/utils/wrapRoute'
 import noteSchema from '~/src/server/schemas/note'
 import sendMail from '~/src/server/utils/sendmail'
 import knex from '~/src/server/db'
+import jwt from 'jwt-simple'
 import crypto from 'crypto'
 import _ from 'lodash'
 
@@ -15,6 +16,9 @@ const handler = async (req, res, next) => {
         token: crypto.randomBytes(5).toString('hex'),
         event_id: req.params.event_id
     }
+
+    // if user is authenticated, verify immediately
+    if ( req.user ) noteRecord.verified = new Date()
 
     // make sure event exists
     const event = await knex('events').where('foreign_id', req.params.event_id)
@@ -39,6 +43,19 @@ const handler = async (req, res, next) => {
         subject: `Message Verification`,
         body: msg,
         html: msg
+    })
+
+    // set token
+    const token = jwt.encode({
+        iss: 'SERVER',
+        note_id: note.id,
+        created: Date.now()
+    }, process.env.JWT_TOKEN_SECRET)
+
+    // set access token cookie
+    res.cookie('access_token', token, {
+        maxAge:  24 * 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true
     })
 
     return succeed({ res, msg: 'Successfully created new note.', add: { data: serializer(note) } })
