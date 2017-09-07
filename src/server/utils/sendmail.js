@@ -1,41 +1,43 @@
-import mailcomposer from 'mailcomposer'
-import MG from 'mailgun-js'
+import SES from 'aws-sdk/clients/ses'
 
-const { MAILGUN_SECRET, MAILGUN_DOMAIN } = process.env
+const { AWS_SES_KEY, AWS_SES_SECRET, AWS_SES_SENDER } = process.env
 
-let mailgun = false
-if ( MAILGUN_SECRET && MAILGUN_DOMAIN )
-    mailgun = MG({ apiKey: MAILGUN_SECRET, domain: MAILGUN_DOMAIN })
+let ses = false
+if ( AWS_SES_KEY && AWS_SES_SECRET )
+    ses = new SES({
+        region: 'us-east-1',
+        accessKeyId: AWS_SES_KEY,
+        secretAccessKey: AWS_SES_SECRET
+    })
 
 export default (ops) => {
     return new Promise((resolve, reject) => {
-        if ( !mailgun ) return reject()
+        if ( !ses ) return resolve()
+        if ( !ops.to ) return reject()
 
         const settings = {
-            subject: 'Message Verifiction',
-            body: '',
-            html: '',
-            ...ops,
-            from: `Ithaca Web People <bot@${ MAILGUN_DOMAIN }>`
+            Destination: {
+                ToAddresses: [ops.to]
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Data: ops.html || ''
+                    },
+                    Text: {
+                        Data: ops.body || ''
+                    }
+                },
+                Subject: {
+                    Data: ops.subject || 'IWP Verification'
+                }
+            },
+            Source: `Ithaca Web People <${ AWS_SES_SENDER }>`
         }
 
-        // no recipient
-        if ( !settings.to ) return reject()
-
-        const mail = mailcomposer(settings)
-        return mail.build((err, message) => {
+        return ses.sendEmail(settings, function(err, data) {
             if (err) return reject(err)
-
-            var dataToSend = {
-                to: settings.to,
-                message: message.toString('ascii')
-            }
-
-            // send the message with mailgun
-            return mailgun.messages().sendMime(dataToSend, (err, body) => {
-                if (err) return reject(err)
-                resolve()
-            })
+            return resolve(data)
         })
     })
 }

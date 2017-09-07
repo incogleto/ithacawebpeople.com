@@ -26,7 +26,8 @@ If you'd like to run the full server locally with a database, continue onto thes
   * `NODE_ENV`: Standard env variable. Can be 'development' or 'production'
   * `BASE_URL`: URL the app expects to be running on, defaults to `https://www.ithacawebpeople.com`. Mostly this is used to point the client side at an API other than its own. If you are doing a full local setup, this should be set to `http://localhost:8080`
   * `DATABASE_URL`: Full postgres URL for the database. If you have created a local db named "ithacawebpeople" for instance, this would likely be set to: postgres://postgres@localhost:5432/ithacawebpeople
-  * `MAILGUN_SECRET`: The app uses mailgun to deliver confirmation links when editing events. This is where you would put your mailgun API key. Omitting this will simply bypass the emailing step.
-  * `MAILGUN_DOMAIN`: Domain to send mailgun emails from. (Omit to bypass email feature)
+  * `AWS_SES_KEY`: The app uses AWS SES to email confirmation links to a user when creating or editing notes. If you'd like to link the app to your own AWS account, this is where you would add SES keys. (omit to skip email sending altogether)
+  * `AWS_SES_SECRET`: AWS SES secret token. (omit to skip email sending)
+  * `AWS_SES_SENDER`: Authorized email address to send automated correspondence from. (omit to skip email sending)
   * `JWT_TOKEN_SECRET`: Seed for the server to use when creating JWT auth tokens. This can be set to any string.
 2. Once the environment variables are properly set, you can run `npm run dev` to start developing. Any changes to the server or client will trigger an automatic rebuild.
