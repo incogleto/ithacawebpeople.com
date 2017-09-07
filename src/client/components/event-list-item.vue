@@ -41,6 +41,6 @@
     .date {
         text-transform: none;
         font-size: 10px;
-        color: rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.8);
     }
 </style>

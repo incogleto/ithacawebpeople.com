@@ -11,6 +11,7 @@
             <div class="search-module">
                 <input
                     type="text"
+                    aria-label="Search"
                     name="s"
                     value=""
                     @focus="initSearch"
