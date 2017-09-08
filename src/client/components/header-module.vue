@@ -1,19 +1,21 @@
 <template>
     <div class="header-module">
-        <router-link to="/">
+        <router-link to="/" class="to-home">
             <h2>Ithaca Web People</h2>
         </router-link>
         <div class="menu">
             <div class="items">
-                <a href="https://www.meetup.com/ithaca-web-people/" target="_blank">Meetup</a>
-                <a href="https://github.com/funkhaus/ithacawebpeople.com" target="_blank">Github</a>
+                <a href="https://www.meetup.com/ithaca-web-people/" target="_blank" @focus="onFocus" @blur="onBlur">Meetup</a>
+                <a href="https://github.com/funkhaus/ithacawebpeople.com" target="_blank" @focus="onFocus" @blur="onBlur">Github</a>
             </div>
             <div v-if="$store.state.breakpoint == 'desktop'" class="search-module">
                 <input
                     type="text"
+                    aria-label="Search"
                     name="s"
                     value=""
                     @focus="initSearch"
+                    @blur="checkSearchInput"
                     @input="searchInput">
                 <div class="icon" @click="clickMag" v-html="magnifyingSVG"></div>
             </div>
@@ -28,6 +30,13 @@
 
     export default {
         name: 'header-module',
+        mounted() {
+            window.addEventListener('keyup', evt => {
+                if( evt.keyCode === 27 ){
+                    this.$store.commit('DESTROY_SEARCH')
+                }
+            })
+        },
         computed: {
             magnifyingSVG () {
                 return magIcon
@@ -43,7 +52,18 @@
             searchInput: _.debounce(async function(e){
                 const results = await searchEvents(e.target.value)
                 this.$store.commit('SET_SEARCH_RESULTS', results)
-            }, 100)
+            }, 100),
+            onFocus(){
+                this.$el.querySelector('.menu .items').classList.add('active')
+            },
+            onBlur(){
+                this.$el.querySelector('.menu .items').classList.remove('active')
+            },
+            checkSearchInput(){
+                if( ! this.$el.querySelector('.search-module input').value ){
+                    this.$store.commit('DESTROY_SEARCH')
+                }
+            }
         }
     }
 </script>
@@ -63,12 +83,19 @@
     .header-module a {
         text-decoration: none;
     }
+    .header-module .to-home:hover h2,
+    .header-module .to-home:focus h2 {
+        letter-spacing: 5px;
+    }
     .header-module h2 {
         text-transform: uppercase;
         letter-spacing: 2px;
         font-weight: 400;
         font-size: 18px;
         margin: 0;
+
+        will-change: letter-spacing;
+        transition: letter-spacing 0.4s;
     }
 
     .header-module .menu > * {
@@ -84,7 +111,8 @@
         font-size: 16px;
     }
 
-    .header-module .menu .items:hover a {
+    .header-module .menu .items:hover a,
+    .header-module .menu .items.active a:not(:focus) {
         opacity: 0.5;
     }
     .header-module .menu .items a:hover {
