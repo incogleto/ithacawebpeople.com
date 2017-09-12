@@ -42,6 +42,8 @@
     import { getEvents } from '../utils'
     import xIcon from '../icons/x.svg'
     import _ from 'lodash'
+    
+    const baseURL = process.env.BASE_URL || 'https://www.ithacawebpeople.com'
 
     export default {
         name: 'dashboard',
@@ -65,7 +67,7 @@
         },
         methods: {
             async setGroup () {
-                const json = await fetch('/api/groups').then(r => r.json())
+                const json = await fetch(`${baseURL}/api/groups`).then(r => r.json())
                 this.group = _.first(json.data)
             },
             delayLoad (key) {
