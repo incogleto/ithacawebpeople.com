@@ -2,6 +2,17 @@ import _ from 'lodash'
 
 const baseURL = process.env.BASE_URL || ''
 
+// get first group
+export const getGroup = async () => {
+
+    // run request, get as json
+    const json = await fetch(`${ baseURL }/api/groups`, { credentials: 'same-origin' }).then(r => r.json())
+    if ( !_.get(json, 'meta.success') ) throw new Error(_.get(json, 'meta.message') || 'Error fetching group')
+
+    // all good, return data
+    return _.first(json.data)
+}
+
 // query events
 export const getEvents = async params => {
     params = _.pick(params, ['limit', 'before', 'after', 'order', 'orderBy'])

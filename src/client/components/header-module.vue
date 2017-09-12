@@ -25,7 +25,7 @@
 
 <script>
     import magIcon from '~/src/client/icons/magnifying-glass.svg'
-    import { searchEvents } from '../utils'
+    import { searchEvents } from '../api'
     import _ from 'lodash'
 
     export default {

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import { getEvents } from '../utils'
+    import { getEvents } from '../api'
     import moment from 'moment'
 
     export default {

@@ -1,4 +1,4 @@
-import { getEvent, getNotes, getSelf } from '../utils'
+import { getEvent, getNotes, getSelf } from '../api'
 import marked from 'marked'
 import Vuex from 'vuex'
 import _ from 'lodash'

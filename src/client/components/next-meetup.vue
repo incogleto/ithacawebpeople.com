@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import { getEvents } from '../utils'
+    import { getEvents } from '../api'
     import marked from 'marked'
     import moment from 'moment'
     import _ from 'lodash'

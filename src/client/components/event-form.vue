@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import { saveNote } from '../utils'
+    import { saveNote } from '../api'
 
     export default {
         name: 'event-form',

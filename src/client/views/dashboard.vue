@@ -39,11 +39,9 @@
 <script>
     import pastMeetups from '../components/past-meetups.vue'
     import nextMeetup from '../components/next-meetup.vue'
-    import { getEvents } from '../utils'
+    import { getEvents, getGroup } from '../api'
     import xIcon from '../icons/x.svg'
     import _ from 'lodash'
-    
-    const baseURL = process.env.BASE_URL || 'https://www.ithacawebpeople.com'
 
     export default {
         name: 'dashboard',
@@ -67,8 +65,8 @@
         },
         methods: {
             async setGroup () {
-                const json = await fetch(`${baseURL}/api/groups`).then(r => r.json())
-                this.group = _.first(json.data)
+                // get group from api & set
+                this.group = await getGroup()
             },
             delayLoad (key) {
                 return setTimeout(() => {
